@@ -38,7 +38,6 @@ const deleteAl = async (id) => {
     alert('Не удалось удалить будильник');
   }
 };
-
   return (
     <div className="App">
       <CreateAlarm onAddItem={handleAddAlarm} />

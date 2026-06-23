@@ -1,104 +1,69 @@
 // client/src/components/CreateAlarm.js
-import { Component } from "react";
+import { useState } from "react";
 
-class CreateAlarm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+function CreateAlarm (){
+  const [alarm, setAlarm]= useState({
       time: "",
-      text: "",
-      loading: false,
-      error: null
-    };
-  }
-
-  onInput = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
+      text: ""
     });
-  };
-
-  onSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (this.state.time === '' || this.state.text === '') {
+ 
+const handleAddAlarm =(e)=>{
+  const {name, value} = e.target
+  setAlarm(prev=>({
+    ...prev,
+    [name]: value
+  }))
+}
+ const onSubmit = async (e) => {
+  const{time, text }= alarm
+    e.preventDefault()   
+    if (time === '' || text === '') {
       alert('Заполните все поля');
       return;
     }
-
-    this.setState({ loading: true, error: null });
-
-    try {
-     
+    try { 
       const response = await fetch('http://localhost:5000/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          time: this.state.time,
-          text: this.state.text
+          time: time,
+          text: text
         })
-      });
-
+        
+      }
+    );
       if (!response.ok) {
         throw new Error('Ошибка при создании будильника');
       }
-
-      const data = await response.json();
-      
-      if (this.props.onAddItem) {
-        this.props.onAddItem(data);
-      }
-
-      
-      this.setState({
-        time: '',
-        text: '',
-        loading: false
-      });
-
-    
-
+       alert("успех");
+      setAlarm({ time: '', text: '' });
     } catch (error) {
-      this.setState({
-        error: error.message,
-        loading: false
-      });
-      alert('Ошибка: ' + error.message);
-    }
-  };
+       alert('Ошибка: ' + error.message);
+    }}
 
-  render() {
-    const { time, text, loading, error } = this.state;
-    
     return (
+      
       <div>
         <h2>Создать будильник</h2>
-        {error && <div style={{color: 'red'}}>{error}</div>}
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={onSubmit}>
           <input 
             type="time" 
             name="time" 
-            value={time} 
-            onChange={this.onInput}
-            disabled={loading}
+            value={alarm.time} 
+            onChange={handleAddAlarm}
           />
           <input 
             type="text" 
             placeholder="Текст" 
             name="text" 
-            value={text} 
-            onChange={this.onInput}
-            disabled={loading}
+            value={alarm.text} 
+            onChange={handleAddAlarm}
           />
-          <button type="submit" disabled={loading}>
-            {loading ? 'Создание...' : 'Добавить'}
+          <button type="submit" >Добавить
           </button>
         </form>
-      </div>
-    );
+      </div>)
   }
-}
-
 export default CreateAlarm;
