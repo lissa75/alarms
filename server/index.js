@@ -4,9 +4,10 @@ import cors from "cors";
 
 import process from "node:process";
 const app = express();
+const CLIENT_URL = process.env.CLIENT_URL
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: CLIENT_URL,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));

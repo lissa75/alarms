@@ -1,16 +1,16 @@
 // client/src/App.js
 import { useState, useEffect} from 'react';
-import CreateAlarm from '../components/create-alarm';
-import ListAlarms from '../components/list-alarms';
+import CreateAlarm from './components/create-alarm';
+import ListAlarms from './components/list-alarms';
 
-
+const API_SERVER = import.meta.env.VITE_API_SERVER; 
 function App() {
- 
+
   const [alarms, setAlarms] = useState([]); 
 
   const deleteAl = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/${id}`, {
+      const response = await fetch(`${API_SERVER}/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -28,7 +28,7 @@ function App() {
 
   const fetchAlarms = async () => {
     try {
-      const response = await fetch('http://localhost:5000/', {
+      const response = await fetch(API_SERVER, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       });
