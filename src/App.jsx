@@ -1,63 +1,60 @@
 // client/src/App.js
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import CreateAlarm from '../components/create-alarm';
+import ListAlarms from '../components/list-alarms';
 
 
 function App() {
-  const [alarms, setAlarms] = useState([]);
+ 
+  const [alarms, setAlarms] = useState([]); 
 
-  const handleAddAlarm = async (newAlarm) => {
-    
+  const deleteAl = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (!response.ok) {
+        throw new Error('Ошибка при удалении');
+      }
+      const data = await response.json();
+      console.log('Удалено:', data);
+      setAlarms(prev => prev.filter(alarm => alarm.id !== id)); 
+    } catch (error) {
+      console.error('Ошибка:', error.message);
+      alert('Не удалось удалить будильник');
+    }
+  };
+
+  const fetchAlarms = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (!response.ok) {
+        throw new Error('Ошибка загрузки');
+      }
+      const data = await response.json();
+       
+      setAlarms(data); 
+    } catch (error) {
+      alert('Ошибка: ' + error.message);
+    }
+  };
+    const handleAddAlarm = (newAlarm) => {
     setAlarms(prev => [...prev, newAlarm]);
   };
-const deleteAl = async (id) => {
-  try {
-    
-    const response = await fetch(`http://localhost:5000/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
 
-   
-    if (!response.ok) {
-      throw new Error('Ошибка при удалении');
-    }
+  useEffect(() => {
+    fetchAlarms();
+  }, []);
 
-
-    const data = await response.json();
-    console.log('Удалено:', data);
-
-  
-    setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm.id !== id));
-    
-
-  } catch (error) {
-    console.error('Ошибка:', error.message);
-    alert('Не удалось удалить будильник');
-  }
-};
   return (
     <div className="App">
       <CreateAlarm onAddItem={handleAddAlarm} />
-      
-      <div>
-        <h3>Список будильников:</h3>
-        {alarms.length === 0 ? (
-          <p>Нет будильников</p>
-        ) : (
-          alarms.map(alarm => (
-            <div key={alarm.id}>
-              {alarm.time} - {alarm.text}
-               <br />
-              <button onClick={() => deleteAl(alarm.id)}>Удалить</button>
-               <button>Изменить</button>
-            </div>
-             
-          ))
-        )}
-      </div>
+    <ListAlarms deleteAl = {deleteAl}
+    alarms={alarms}/>
     </div>
   );
 }

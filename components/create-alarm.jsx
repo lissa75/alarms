@@ -1,8 +1,8 @@
 // client/src/components/CreateAlarm.js
 import { useState } from "react";
 
-function CreateAlarm (){
-  const [alarm, setAlarm]= useState({
+function CreateAlarm ({onAddItem}){
+  const [alarms, setAlarm]= useState({
       time: "",
       text: ""
     });
@@ -15,7 +15,7 @@ const handleAddAlarm =(e)=>{
   }))
 }
  const onSubmit = async (e) => {
-  const{time, text }= alarm
+  const{time, text }= alarms
     e.preventDefault()   
     if (time === '' || text === '') {
       alert('Заполните все поля');
@@ -37,7 +37,8 @@ const handleAddAlarm =(e)=>{
       if (!response.ok) {
         throw new Error('Ошибка при создании будильника');
       }
-       alert("успех");
+      const newAlarm = await response.json()
+       onAddItem(newAlarm)
       setAlarm({ time: '', text: '' });
     } catch (error) {
        alert('Ошибка: ' + error.message);
@@ -51,14 +52,14 @@ const handleAddAlarm =(e)=>{
           <input 
             type="time" 
             name="time" 
-            value={alarm.time} 
+            value={alarms.time} 
             onChange={handleAddAlarm}
           />
           <input 
             type="text" 
             placeholder="Текст" 
             name="text" 
-            value={alarm.text} 
+            value={alarms.text} 
             onChange={handleAddAlarm}
           />
           <button type="submit" >Добавить
