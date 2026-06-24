@@ -1,6 +1,5 @@
 import CreateAlarm from '../components/create-alarm';
 import ListAlarms from '../components/list-alarms';
-import App from '../App'
 
  function HomePage({alarms,handleAddAlarm, handleDelete , updateAlarm}){
     return(

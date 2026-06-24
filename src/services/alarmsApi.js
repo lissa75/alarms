@@ -1,3 +1,5 @@
+
+
  
  const API_SERVER = import.meta.env.VITE_API_SERVER; 
   export const fetchAlarms = async () => {
@@ -58,7 +60,8 @@ export const fetchAlarmById = async (id) => {
       }
     );
       if (!response.ok) {
-        throw new Error('Ошибка при создании будильника');
+           throw new Error('Ошибка при создании ');
+       
       }
       const newAlarm = await response.json()
        console.log(newAlarm)
@@ -108,5 +111,5 @@ export const fetchAlarmById = async (id) => {
       return data
     } catch (error) {
        alert('Ошибка: ' + error.message);
-       return "ошибка"
+       return null
     }}
