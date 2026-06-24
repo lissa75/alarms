@@ -2,7 +2,7 @@
 import AlarmItem from "./alarm-item";
 
 
-function ListAlarms({deleteAl, alarms}) {
+function ListAlarms({alarms, onDelete, onUpdate}) {
   
  return (
   <div>
@@ -15,8 +15,8 @@ function ListAlarms({deleteAl, alarms}) {
           <AlarmItem
             key={alarm.id || index}
             alarm={alarm}
-            onDelete={deleteAl}
-            
+            onDelete = {onDelete}
+            onUpdate = {onUpdate}
           />
         );
       })

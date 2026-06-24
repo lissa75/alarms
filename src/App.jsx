@@ -3,63 +3,46 @@ import { useState, useEffect} from 'react';
 import CreateAlarm from './components/create-alarm';
 import ListAlarms from './components/list-alarms';
 
-const API_SERVER = import.meta.env.VITE_API_SERVER; 
+import {deleteAlarm, fetchAlarms, onEdit, onSubmit} from './services/alarmsApi';
+
 function App() {
 
   const [alarms, setAlarms] = useState([]); 
- 
-  const deleteAl = async (id) => {
-    try {
-      const response = await fetch(`${API_SERVER}/${id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      if (!response.ok) {
-        throw new Error('Ошибка при удалении');
-      }
-      const data = await response.json();
-      console.log('Удалено:', data);
-      setAlarms(prev => prev.filter(alarm => alarm.id !== id)); 
-    } catch (error) {
-      console.error('Ошибка:', error.message);
-      alert('Не удалось удалить будильник');
-    }
+    const handleAddAlarm = async(data) => {
+   const newAlarm=  await onSubmit(data)
+    setAlarms(prev => [...prev, newAlarm]);
+     
   };
 
-  const fetchAlarms = async () => {
-    try {
-      const response = await fetch(API_SERVER, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      if (!response.ok) {
-        throw new Error('Ошибка загрузки');
-      }
-      const data = await response.json();
-       
-      setAlarms(data); 
-    } catch (error) {
-      alert('Ошибка: ' + error.message);
-    }
-  };
-    const handleAddAlarm = (newAlarm) => {
-    setAlarms(prev => [...prev, newAlarm]);
-  };
-  
   useEffect(() => {
-    fetchAlarms();
+    const loadAlarms= async()=>{
+    const data = await fetchAlarms()  
+    setAlarms(data); 
+ }
+ loadAlarms()
   }, []);
 
-
+const handleDelete =async(id)=>{
+  await deleteAlarm(id)
+   setAlarms(prev => prev.filter(alarm => alarm.id !== id)); 
+}
+const updateAlarm = async(id, updateData) => {
+  const result = await onEdit(id, updateData);
+  if (result && result !== "ошибка") {
+      const freshData = await fetchAlarms();
+      if (freshData) {
+          setAlarms(freshData);
+      }
+  }
+}
 
   return (
     <div className="App">
       <CreateAlarm onAddItem={handleAddAlarm} />
     <ListAlarms 
-    deleteAl = {deleteAl}
+    alarms={alarms}  onDelete = {handleDelete}
+    onUpdate = {updateAlarm}/>
   
-    alarms={alarms}/>
-   
 
     </div>
   );

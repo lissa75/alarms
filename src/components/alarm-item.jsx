@@ -1,49 +1,46 @@
 import Modal from "./changeAlarm";
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 
-const API_SERVER = import.meta.env.VITE_API_SERVER; 
-
-function AlarmItem({ alarm, onDelete}) {
+function AlarmItem({ alarm, onDelete, onUpdate}) {
    const [isOpen, setIsOpen] = useState(false)
+
    const onToogle=()=>{
   setIsOpen(!isOpen)
 }
 
-  const [alarms, setAlarm]= useState({
+  const [formData, setformData]= useState({
       time: alarm.time,
       text: alarm.text
     });
- 
+
+  useEffect(() => {
+    setformData({
+      time: alarm.time,
+      text: alarm.text
+    });
+  }, [alarm]);
+
 const handleAddAlarm =(e)=>{
   const {name, value} = e.target
-  setAlarm(prev=>({
+  setformData(prev=>({
     ...prev,
     [name]: value
   }))}
 
- const onSubmit = async ( id) => { 
-    try { 
-      const response = await fetch(`${API_SERVER}/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          time: time,
-          text: text
-        })
-        
-      }
-    );   
-      if (!response.ok) {
-        throw new Error('Ошибка при сохранении ');
-      }
+ const handleSubmit = async(e)=>{
+  e.preventDefault()
+    const updateData = {
+      time: formData.time,
+      text: formData.text,
+    };
+ 
+  await onUpdate(alarm.id, updateData)
+  setIsOpen(false)
+ }
+ 
 
-    } catch (error) {
-       alert('Ошибка: ' + error.message);
-    }}
     
-const {text, time} = alarms
+const {text, time} = formData
   return (
     <div>
       <div>
@@ -55,7 +52,7 @@ const {text, time} = alarms
        isOpen={isOpen} 
        onToogle = {onToogle}
        >
-      <form onSubmit={()=>onSubmit(alarm.id)} >
+      <form onSubmit={handleSubmit} >
           <input 
          
             type="time" 
