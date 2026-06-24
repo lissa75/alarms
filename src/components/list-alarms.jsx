@@ -1,5 +1,5 @@
 import AlarmItem from "./alarm-item";
-
+import { motion, AnimatePresence } from 'framer-motion'
 function ListAlarms({alarms, onDelete, onUpdate}) {
   
   return (
@@ -25,16 +25,24 @@ function ListAlarms({alarms, onDelete, onUpdate}) {
         </p>
       ) : (
         <div className="space-y-3">
-          {alarms.map((alarm) => {
-            return (
-              <AlarmItem 
+         <AnimatePresence>
+            {alarms.map((alarm) => (
+              <motion.div
                 key={alarm.id}
-                alarm={alarm}
-                onDelete={onDelete}
-                onUpdate={onUpdate}
-              />
-            );
-          })}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                 whileInView={{ opacity: 1 }}
+              >
+                <AlarmItem 
+                  alarm={alarm}
+                  onDelete={onDelete}
+                  onUpdate={onUpdate}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       )}
     </div>

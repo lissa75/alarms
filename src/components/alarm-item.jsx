@@ -1,6 +1,7 @@
 import Modal from "./changeAlarm";
 import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+ import { motion } from 'framer-motion'
 
 function AlarmItem({ alarm, onDelete, onUpdate}) {
     const navigate = useNavigate()
@@ -50,7 +51,13 @@ const {text, time} = formData
              transition-all"
   onClick={() => navigate(`/${alarm.id}`)}
 >
-  <div className="flex items-center justify-between ">
+  <div>
+    <motion.div
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}         
+  transition={{ duration: 0.5 }}
+   className="flex items-center justify-between ">      
     <div className="text-gray-800  dark:text-white font-medium ">
       {alarm.time} - {alarm.text}
     </div>
@@ -69,11 +76,11 @@ const {text, time} = formData
           e.stopPropagation();
           onToogle();
         }}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-      >
+        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" >
         open modal
       </button>
-    </div>
+    </div> 
+    </motion.div>
   </div>
   
   <Modal 
