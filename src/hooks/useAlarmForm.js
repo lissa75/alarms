@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useCallback } from 'react';
+
 
 export function useAlarmForm(onAddItem) {
   const [alarms, setAlarm] = useState({
@@ -14,7 +16,7 @@ export function useAlarmForm(onAddItem) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async(e)=> {
     e.preventDefault();
     const data = {
       time: alarms.time,
@@ -22,7 +24,7 @@ export function useAlarmForm(onAddItem) {
     };
     await onAddItem(data);
     setAlarm({ time: "", text: "" });
-  };
+  }, [alarms, onAddItem])
 
   return {alarms, handleAddAlarm, handleSubmit };
 }

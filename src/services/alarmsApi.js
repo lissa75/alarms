@@ -22,7 +22,7 @@
     
     if (time === '' || text === '') {
       alert('Заполните все поля');
-      return;
+     return null 
     }
     try { 
       const response = await fetch(API_SERVER, {

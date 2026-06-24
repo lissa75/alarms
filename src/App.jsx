@@ -9,9 +9,11 @@ function App() {
 
   const [alarms, setAlarms] = useState([]); 
     const handleAddAlarm = async(data) => {
-   const newAlarm=  await onSubmit(data)
+        const newAlarm=  await onSubmit(data)
+      if(newAlarm && newAlarm.id){
     setAlarms(prev => [...prev, newAlarm]);
-     
+      }
+ 
   };
 
   useEffect(() => {
