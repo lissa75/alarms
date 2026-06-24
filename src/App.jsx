@@ -7,7 +7,7 @@ const API_SERVER = import.meta.env.VITE_API_SERVER;
 function App() {
 
   const [alarms, setAlarms] = useState([]); 
-
+ 
   const deleteAl = async (id) => {
     try {
       const response = await fetch(`${API_SERVER}/${id}`, {
@@ -45,16 +45,22 @@ function App() {
     const handleAddAlarm = (newAlarm) => {
     setAlarms(prev => [...prev, newAlarm]);
   };
-
+  
   useEffect(() => {
     fetchAlarms();
   }, []);
 
+
+
   return (
     <div className="App">
       <CreateAlarm onAddItem={handleAddAlarm} />
-    <ListAlarms deleteAl = {deleteAl}
+    <ListAlarms 
+    deleteAl = {deleteAl}
+  
     alarms={alarms}/>
+   
+
     </div>
   );
 }

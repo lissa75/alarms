@@ -1,5 +1,6 @@
 // client/src/components/CreateAlarm.js
 import { useState } from "react";
+const API_SERVER = import.meta.env.VITE_API_SERVER; 
 
 function CreateAlarm ({onAddItem}){
   const [alarms, setAlarm]= useState({
@@ -22,7 +23,7 @@ const handleAddAlarm =(e)=>{
       return;
     }
     try { 
-      const response = await fetch('http://localhost:5000/', {
+      const response = await fetch(API_SERVER, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
