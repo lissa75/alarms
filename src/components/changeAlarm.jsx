@@ -24,13 +24,23 @@ function Modal({ children, isOpen, onToogle}) {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="modal-overlay"  onClick={onToogle} >
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        
-        {children}
-        <button onClick={onToogle}> закрыть </button>
-      </div>
-    </div>,
+   <div 
+  className="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+  onClick={onToogle}
+>
+  <div 
+    className="modal-content bg-white dark:bg-gray-800  rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 relative"
+    onClick={(e) => e.stopPropagation()}
+  >
+    {children}
+    <button 
+      onClick={onToogle}
+      className="mt-6 w-full bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600  hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors"
+    >
+      закрыть
+    </button>
+  </div>
+</div>,
     document.body
   );
 }

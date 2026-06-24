@@ -16,7 +16,28 @@
        return null
     }
   };
+// services/alarmsApi.js
+export const fetchAlarmById = async (id) => {
+  try {
+    const response = await fetch(`${API_SERVER}/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
 
+    if (!response.ok) {
+      throw new Error(`Ошибка при загрузке: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API вернул:', data); // Отладочный вывод
+    return data;
+    
+  } catch (error) {
+    console.error('Ошибка в fetchAlarmById:', error.message);
+  }
+};
  export const onSubmit = async ( data) => {
   const{time, text }= data
     
