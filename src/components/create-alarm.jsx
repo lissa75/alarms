@@ -1,28 +1,10 @@
 // client/src/components/CreateAlarm.js
-import { useState } from "react";
+import { useAlarmForm } from "../hooks/useAlarmForm";
 
-function CreateAlarm ({onAddItem}){
-  const [alarms, setAlarm]= useState({
-      time: "",
-      text: ""
-    });
-const handleAddAlarm =(e)=>{
-  const {name, value} = e.target
-  setAlarm(prev=>({
-    ...prev,
-    [name]: value
-  }))}
-     const handleSubmit = async(e)=>{
-  e.preventDefault()
-    const data = {
-      time: alarms.time,
-      text: alarms.text,
-    };
-  await onAddItem( data)
-   setAlarm({ time: '', text: '' });
-}
+function CreateAlarm ({onAddItem }){
+
+const {handleSubmit, handleAddAlarm, alarms} = useAlarmForm(onAddItem)
     return (
-      
       <div>
         <h2>Создать будильник</h2>
         <form onSubmit={handleSubmit}>
