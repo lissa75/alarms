@@ -1,4 +1,3 @@
-
 function ThemeToggle({ isDark, toggleTheme }) {
   return (
     <button
@@ -17,7 +16,7 @@ function ThemeToggle({ isDark, toggleTheme }) {
       "
       aria-label="Переключить тему"
     >
-      {isDark ? '☀️' : '🌙'}
+      {isDark ? "☀️" : "🌙"}
     </button>
   );
 }

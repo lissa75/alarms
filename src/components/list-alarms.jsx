@@ -1,31 +1,36 @@
 import AlarmItem from "./alarm-item";
-import { motion, AnimatePresence } from 'framer-motion'
-function ListAlarms({alarms, onDelete, onUpdate}) {
-  
+import { motion, AnimatePresence } from "framer-motion";
+function ListAlarms({ alarms, onDelete, onUpdate }) {
   return (
-    <div className="
+    <div
+      className="
       bg-white dark:bg-gray-900
       rounded-xl shadow-sm dark:shadow-gray-700
       p-6 transition-colors
-    ">
-      <h3 className="
+    "
+    >
+      <h3
+        className="
         text-xl font-bold mb-4
         text-gray-800 dark:text-gray-200
         transition-colors
-      ">
-        Список будильников:
+      "
+      >
+        Список будильников
       </h3>
-      
+
       {!alarms || alarms.length === 0 ? (
-        <p className="
+        <p
+          className="
           text-gray-500 dark:text-gray-400
           text-center py-8 transition-colors
-        ">
+        "
+        >
           Нет будильников
         </p>
       ) : (
         <div className="space-y-3">
-         <AnimatePresence>
+          <AnimatePresence>
             {alarms.map((alarm) => (
               <motion.div
                 key={alarm.id}
@@ -33,9 +38,9 @@ function ListAlarms({alarms, onDelete, onUpdate}) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                 whileInView={{ opacity: 1 }}
+                whileInView={{ opacity: 1 }}
               >
-                <AlarmItem 
+                <AlarmItem
                   alarm={alarm}
                   onDelete={onDelete}
                   onUpdate={onUpdate}
