@@ -22,7 +22,7 @@ pool.query("SELECT NOW()", (err, res) => {
     console.log("Connected to the database:", res.rows);
   }
 });
-app.get("/", async (req, res) => {
+app.get('/api/alarms', async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM ALARMS");
     res.status(201).json(result.rows);
@@ -32,7 +32,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+app.post('/api/alarms', async (req, res) => {
   const { time, text } = req.body;
 
   if (!time || !text) {
@@ -53,7 +53,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.put("/:id", async (req, res) => {
+app.put("/api/alarms/:id", async (req, res) => {
   const { id } = req.params;
   const { time, text } = req.body;
 
@@ -68,7 +68,7 @@ app.put("/:id", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-app.get("/:id", async (req, res) => {
+app.get("/api/alarms/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -80,7 +80,7 @@ app.get("/:id", async (req, res) => {
   }
 });
 
-app.delete("/:id", async (req, res) => {
+app.delete("/api/alarms/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const result = await pool.query("DELETE FROM alarms where id = $1", [id]);

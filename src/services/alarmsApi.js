@@ -1,6 +1,8 @@
-const API_SERVER = import.meta.env.VITE_API_SERVER;
+const API_SERVER = import.meta.env.VITE_API_SERVER; 
+const ALARMS_ENDPOINT = import.meta.env.VITE_API_ENDPOINT; 
+
 export const fetchAlarms = async () => {
-  const response = await fetch(API_SERVER, {
+  const response = await fetch(`${API_SERVER}${ALARMS_ENDPOINT}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -10,9 +12,9 @@ export const fetchAlarms = async () => {
   const data = await response.json();
   return data;
 };
-// services/alarmsApi.js
+
 export const fetchAlarmById = async (id) => {
-  const response = await fetch(`${API_SERVER}/${id}`, {
+  const response = await fetch(`${API_SERVER}${ALARMS_ENDPOINT}/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -32,7 +34,7 @@ export const onSubmit = async (data) => {
     alert("Заполните все поля");
     return null;
   }
-  const response = await fetch(API_SERVER, {
+  const response = await fetch(`${API_SERVER}${ALARMS_ENDPOINT}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,14 +45,14 @@ export const onSubmit = async (data) => {
     }),
   });
   if (!response.ok) {
-    throw new Error("Ошибка при создании ");
+    throw new Error("Ошибка при создании");
   }
   const newAlarm = await response.json();
   return newAlarm;
 };
 
 export const deleteAlarm = async (id) => {
-  const response = await fetch(`${API_SERVER}/${id}`, {
+  const response = await fetch(`${API_SERVER}${ALARMS_ENDPOINT}/${id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
   });
@@ -63,7 +65,7 @@ export const deleteAlarm = async (id) => {
 };
 
 export const onEdit = async (id, updateData) => {
-  const response = await fetch(`${API_SERVER}/${id}`, {
+  const response = await fetch(`${API_SERVER}${ALARMS_ENDPOINT}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -71,7 +73,7 @@ export const onEdit = async (id, updateData) => {
     body: JSON.stringify(updateData),
   });
   if (!response.ok) {
-    throw new Error("Ошибка при сохранении ");
+    throw new Error("Ошибка при сохранении");
   }
   const data = await response.json();
   return data;
