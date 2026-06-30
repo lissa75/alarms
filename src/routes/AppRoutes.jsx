@@ -5,17 +5,10 @@ import AlarmPageDetail from "../pages/AlarmPageDetail";
 import ThemeToggle from "../components/ThemeToggle";
 import ErrorBoundary from "../components/ErrorBoundary";
 
-function AppRoutes({
-  alarms,
-  handleAddAlarm,
-  handleDelete,
-  updateAlarm,
-  toggleTheme,
-  isDark,
-}) {
+function AppRoutes() {
   return (
     <div className="min-h-screen w-full dark:bg-gray-800 transition-colors">
-      <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+      <ThemeToggle />
 
       <ErrorBoundary>
         <Routes>
@@ -24,10 +17,6 @@ function AppRoutes({
             element={
               <ErrorBoundary>
                 <HomePage
-                  alarms={alarms}
-                  handleAddAlarm={handleAddAlarm}
-                  handleDelete={handleDelete}
-                  updateAlarm={updateAlarm}
                 />
               </ErrorBoundary>
             }

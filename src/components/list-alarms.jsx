@@ -1,6 +1,8 @@
+import { useAlarms } from "../hooks/useAlarms";
 import AlarmItem from "./alarm-item";
 import { motion, AnimatePresence } from "framer-motion";
-function ListAlarms({ alarms, onDelete, onUpdate }) {
+function ListAlarms() {
+  const { alarms} = useAlarms()
   return (
     <div
       className="
@@ -42,8 +44,6 @@ function ListAlarms({ alarms, onDelete, onUpdate }) {
               >
                 <AlarmItem
                   alarm={alarm}
-                  onDelete={onDelete}
-                  onUpdate={onUpdate}
                 />
               </motion.div>
             ))}

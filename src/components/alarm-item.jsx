@@ -2,8 +2,11 @@ import Modal from "./changeAlarm";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAlarms } from "../hooks/useAlarms";
 
-function AlarmItem({ alarm, onDelete, onUpdate }) {
+function AlarmItem({alarm}) {
+
+  const {handleDelete, updateAlarm } = useAlarms()
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,7 +41,7 @@ function AlarmItem({ alarm, onDelete, onUpdate }) {
       text: formData.text,
     };
 
-    await onUpdate(alarm.id, updateData);
+    await updateAlarm(alarm.id, updateData);
     setIsOpen(false);
   };
 
@@ -67,7 +70,7 @@ function AlarmItem({ alarm, onDelete, onUpdate }) {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                onDelete(alarm.id);
+                handleDelete(alarm.id);
               }}
               className="bg-gray-400 hover:bg-gray-500  text-white px-3 py-2 rounded-lg text-sm transition-colors"
             >

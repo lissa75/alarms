@@ -1,7 +1,8 @@
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
 
-function Modal({ children, isOpen, onToggle }) {
+function Modal({onToggle, isOpen, children}) {
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onToggle();
