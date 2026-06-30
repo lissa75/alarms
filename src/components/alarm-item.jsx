@@ -7,7 +7,7 @@ function AlarmItem({ alarm, onDelete, onUpdate }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const onToogle = () => {
+  const onToggle = () => {
     setIsOpen(!isOpen);
   };
 
@@ -76,7 +76,7 @@ function AlarmItem({ alarm, onDelete, onUpdate }) {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                onToogle();
+                onToggle();
               }}
               className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
             >
@@ -86,7 +86,7 @@ function AlarmItem({ alarm, onDelete, onUpdate }) {
         </motion.div>
       </div>
 
-      <Modal isOpen={isOpen} onToogle={onToogle}>
+      <Modal isOpen={isOpen} onToggle={onToggle}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="time"

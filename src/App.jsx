@@ -71,13 +71,10 @@ function App() {
 
   const updateAlarm = async (id, updateData) => {
     try {
-      const result = await onEdit(id, updateData);
-      if (result && result !== "ошибка") {
-        const freshData = await fetchAlarms();
-        if (freshData) {
-          setAlarms(freshData);
-        }
-      }
+      const updated = await onEdit(id, updateData);
+      setAlarms((prev) =>
+        prev.map((alarm) => (alarm.id === id ? updated : alarm)),
+      );
     } catch (err) {
       setError(err.message);
     }
