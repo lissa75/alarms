@@ -1,7 +1,12 @@
-import { useTheme } from "../hooks/useTheme";
+import { useEffect } from "react";
+import { useThemeStore } from "../store/themeStore";
 
 function ThemeToggle() {
-  const { isDark, toggleTheme } = useTheme()
+  const isDark = useThemeStore((state) => state.isDark);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
+  useEffect(()=>{
+    document.documentElement.classList.toggle('dark', isDark)
+  }, [isDark])
   return (
     <button
       onClick={toggleTheme}

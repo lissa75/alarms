@@ -1,8 +1,8 @@
-import { useAlarms } from "../hooks/useAlarms";
+import { useAlarmsStore } from "../store/alarmStore";
 import AlarmItem from "./alarm-item";
 import { motion, AnimatePresence } from "framer-motion";
 function ListAlarms() {
-  const { alarms} = useAlarms()
+  const alarms = useAlarmsStore((state) => state.alarms);
   return (
     <div
       className="
@@ -42,9 +42,7 @@ function ListAlarms() {
                 transition={{ duration: 0.3 }}
                 whileInView={{ opacity: 1 }}
               >
-                <AlarmItem
-                  alarm={alarm}
-                />
+                <AlarmItem alarm={alarm} />
               </motion.div>
             ))}
           </AnimatePresence>

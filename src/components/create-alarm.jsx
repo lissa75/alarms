@@ -1,9 +1,9 @@
 // client/src/components/CreateAlarm.js
 import { useAlarmForm } from "../hooks/useAlarmForm";
-import { useAlarms } from "../hooks/useAlarms";
+import { useAlarmsStore } from "../store/alarmStore";
 
 function CreateAlarm() {
-  const { onAddItem } = useAlarms
+  const  onAddItem  = useAlarmsStore(state=>state.onAddItem)
   const { handleSubmit, handleAddAlarm, alarms } = useAlarmForm(onAddItem);
   return (
     <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-8 mb-8 transition-colors">

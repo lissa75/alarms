@@ -1,7 +1,6 @@
-import { useAlarmsUI } from "../hooks/useAlarmsUI";
-
+import {useAlarmsStore} from '../store/alarmStore'
 function AlarmError() {
-  const { error } = useAlarmsUI();
+  const error = useAlarmsStore(state=>state.error)
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">

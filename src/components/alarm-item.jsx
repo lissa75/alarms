@@ -2,11 +2,12 @@ import Modal from "./changeAlarm";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useAlarms } from "../hooks/useAlarms";
+import { useAlarmsStore } from "../store/alarmStore";
 
 function AlarmItem({alarm}) {
 
-  const {handleDelete, updateAlarm } = useAlarms()
+  const handleDelete = useAlarmsStore(state=>state.handleDelete)
+  const updateAlarm = useAlarmsStore(state=>state.updateAlarm)
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 

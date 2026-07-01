@@ -1,6 +1,7 @@
-import { useAlarmsUI } from "../hooks/useAlarmsUI";
+import { useAlarmsStore } from "../store/alarmStore";
+
 function AlarmLoading() {
-  const { isLoading } = useAlarmsUI();
+  const  isLoading  = useAlarmsStore(state=>state.isLoading);
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useCallback } from "react";
-import { useAlarms } from "./useAlarms";
+import { useAlarmsStore } from "../store/alarmStore";
 
 export function useAlarmForm() {
 
-  const {onAddItem} = useAlarms()
+  const onAddItem = useAlarmsStore(state=>state.onAddItem)
   const [alarms, setAlarm] = useState({
     time: "",
     text: "",
