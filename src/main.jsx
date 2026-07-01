@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { AlarmProvider } from "./context/AlarmProvider.jsx";
 import { ThemeProvider } from "./context/ThemeProvider.jsx";
+import { AlarmsUIProvider } from "./context/AlarmsUIProvider.jsx";
 
 async function enableMocking() {
   const { worker } = await import("./mocks/browser");
@@ -20,9 +21,11 @@ enableMocking().then(() => {
   root.render(
     <StrictMode>
       <ThemeProvider>
-        <AlarmProvider>
-          <App />
-        </AlarmProvider>
+        <AlarmsUIProvider>
+          <AlarmProvider>
+            <App />
+          </AlarmProvider>
+        </AlarmsUIProvider>
       </ThemeProvider>
     </StrictMode>,
   );
