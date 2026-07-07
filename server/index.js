@@ -22,7 +22,7 @@ pool.query("SELECT NOW()", (err, res) => {
     console.log("Connected to the database:", res.rows);
   }
 });
-app.get('/api/alarms', async (req, res) => {
+app.get("/api/alarms", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM ALARMS");
     res.status(201).json(result.rows);
@@ -32,7 +32,7 @@ app.get('/api/alarms', async (req, res) => {
   }
 });
 
-app.post('/api/alarms', async (req, res) => {
+app.post("/api/alarms", async (req, res) => {
   const { time, text } = req.body;
 
   if (!time || !text) {

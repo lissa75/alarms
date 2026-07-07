@@ -1,17 +1,17 @@
 import dotenv from "dotenv";
 
 import process from "node:process";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import pkg from "pg";
-const { Pool } = pkg;
 
-dotenv.config();
+const { Pool } = pkg;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 });
 
 export default pool;
