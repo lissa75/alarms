@@ -1,5 +1,5 @@
 import express from "express";
-import pool from "../db";
+import pool from "../db.js";
 import cors from "cors";
 
 import process from "node:process";
