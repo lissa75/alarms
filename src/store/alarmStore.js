@@ -7,7 +7,7 @@ import {
 } from "../services/alarmsApi";
 import { devtools } from "zustand/middleware";
 
-export const useAlarmsStore = create(devtools((set, get) => ({
+export const useAlarmsStore = create(devtools((set) => ({
   alarms: [],
   setAlarms: (newAlarms) => set({ alarms: newAlarms }),
 
