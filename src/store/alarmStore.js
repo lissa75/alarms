@@ -40,8 +40,10 @@ export const useAlarmsStore = create(devtools((set, get) => ({
   },
 updateAlarm: async (id, updateData) => {
   try {
-    await onEdit(id, updateData);
-    await get().loadAlarms();
+    const updated = await onEdit(id, updateData);
+    set((state) => ({
+      alarms: state.alarms.map((a) => (a.id === id ? updated : a)),
+    }));
   } catch (err) {
     set({ error: err.message });
   }
